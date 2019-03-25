@@ -138,7 +138,7 @@ order by id
 ```
 
 
-# HANKERRANK PROBLEM
+# HakerRank Problem
 
 ### No.1  query the city with maximal or minimal length of name. 
 Here we need to use union to link them. And we use limit 1 to choose the first one. And when it comes to maximal or minimal, we can first think about using order by. Because when we want to use `Max` or `Min`, we need to use `Group by`
