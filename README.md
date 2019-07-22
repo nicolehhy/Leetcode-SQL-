@@ -195,3 +195,61 @@ BEGIN
     RETURN (SELECT DISTINCT(Salary) FROM Employee ORDER BY Salary DESC LIMIT 1 offset N);
     END
 ```
+
+### Practice
+Practice: 3 Tables <br>
+          S: s_no, s_name <br>
+          C: c_no, t_name <br>
+          SC: s_no, c_no, grade <br>
+
+Q1 : find out the students who didn't choose Li's course
+```SQL
+select s_name from S
+where s_no not in 
+(
+select sno from SC where c_no in
+(select c_no from C 
+where t_name='lining')
+)
+```SQL
+
+Q2 : find out the students who have more than 2 courses less than 60
+```SQL
+select name
+from
+(
+select s_no 
+from SC
+where grade <60
+group by s_no
+having count(s_no) >=2
+)a
+join 
+(
+select s_no, name 
+from S
+)b
+on a.s_no=b.s_no
+```SQL
+
+Q3 : find out students who choose course1 and course2
+```SQL
+select name 
+from S
+where s_no in 
+(
+select * 
+from 
+(
+select s_no 
+from SC 
+where c_no=1
+)a
+join
+(
+select s_no
+from SC
+where c_no=2
+)b
+on a.s_no = b.s_no
+)
