@@ -203,6 +203,7 @@ Practice: 3 Tables <br>
           SC: s_no, c_no, grade <br>
 
 Q1 : find out the students who didn't choose Li's course
+
 ```SQL
 select s_name from S
 where s_no not in 
@@ -211,7 +212,7 @@ select sno from SC where c_no in
 (select c_no from C 
 where t_name='lining')
 )
-```SQL
+```
 
 Q2 : find out the students who have more than 2 courses less than 60
 ```SQL
@@ -230,7 +231,7 @@ select s_no, name
 from S
 )b
 on a.s_no=b.s_no
-```SQL
+```
 
 Q3 : find out students who choose course1 and course2
 ```SQL
@@ -253,3 +254,4 @@ where c_no=2
 )b
 on a.s_no = b.s_no
 )
+```
