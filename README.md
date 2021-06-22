@@ -255,3 +255,26 @@ where c_no=2
 on a.s_no = b.s_no
 )
 ```
+### 面试
+Q1 : 有一张active表，字段有date, id，算出每日活跃，次日留存，7日留存
+`Tips`想要拿到留存，就得知道每天新增用户，以及次日还在活跃的用户，7日还在活跃的用户有哪些，主要用到join和datediff（）
+```SQL
+SELECT ymd
+	   ,count(distinct id_0) as "active_users"
+	   ,count(distinct id_1)/count(distinct id_0) as "1day_renten"
+	   ,count(distinct id_2)/count(distinct id_0) as "2day_renten"
+FROM
+	   (SELECT a.ymd
+		       ,a.id AS id_0
+		       ,b.id AS id_1
+		       ,c.id AS id_2
+		FROM active a
+		LEFT JOIN active b
+		ON datediff(date(b.ymd),date(a.ymd))=1 -- 次日留存
+		AND b.id=a.id
+		LEFT JOIN active c
+		ON datediff(date(c.ymd),date(a.ymd))=2 -- 3日留存
+		AND c.id=a.id
+		ORDER BY a.ymd)table1
+GROUP BY ymd
+```
